@@ -1,5 +1,5 @@
 //TODO: STEP 1 - Import the useState hook.
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BottomRow from "./BottomRow";
 import TeamCreator from './components/Team';
 import "./App.css";
@@ -8,6 +8,14 @@ function App() {
   //TODO: STEP 2 - Establish your applictaion's state with some useState hooks.  You'll need one for the home score and another for the away score.
 const [homeScore, setHomeScore] = useState(0);
 const [awayScore, setAwayScore] = useState(0);
+// The Timer state down here
+const [timer, setTimer] = useState(2000);
+// The useeffect for the timer
+// useEffect(() => {
+//   const counter =
+//     timer > 0 && setInterval(() => setTimer(timer - 1), 1000);
+//   return () => clearInterval(counter);
+// }, [timer]);
 // This function will add the correct score to the state
 const handlerFunc = (setScore, team, amount) => {
   return setScore(team + amount);
@@ -26,7 +34,7 @@ const handlerFunc = (setScore, team, amount) => {
           score={homeScore}
           />
             {/* TODO STEP 3 - We need to change the hardcoded values in these divs to accept dynamic values from our state. */}
-          <div className="timer">00:03</div>
+        <div className="timer">{timer}</div>
           {/* My custom team component with appropriate props */}
           <TeamCreator 
           side='away'
