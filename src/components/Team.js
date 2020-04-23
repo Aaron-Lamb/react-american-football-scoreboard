@@ -1,7 +1,7 @@
 import React from 'react';
 
 //A component to write the team div
-const TeamCreator = (props) => {
+const TeamCreator = props => {
     return (
         //The Main div
         <div className={props.side}>
