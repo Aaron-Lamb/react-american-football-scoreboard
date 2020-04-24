@@ -1,26 +1,48 @@
 //TODO: STEP 1 - Import the useState hook.
-import React from "react";
+import React, { useState, useEffect } from "react";
 import BottomRow from "./BottomRow";
+import TeamCreator from './components/Team';
 import "./App.css";
 
 function App() {
   //TODO: STEP 2 - Establish your applictaion's state with some useState hooks.  You'll need one for the home score and another for the away score.
+const [homeScore, setHomeScore] = useState(0);
+const [awayScore, setAwayScore] = useState(0);
+// The Timer state down here
+const [timer, setTimer] = useState(2000);
+// The useeffect for the timer
+// useEffect(() => {
+//   const counter =
+//     timer > 0 && setInterval(() => setTimer(timer - 1), 1000);
+//   return () => clearInterval(counter);
+// }, [timer]);
+// This function will add the correct score to the state
+const handlerFunc = (setScore, team, amount) => {
+  return setScore(team + amount);
+}
 
   return (
     <div className="container">
       <section className="scoreboard">
         <div className="topRow">
-          <div className="home">
-            <h2 className="home__name">Lions</h2>
-
+         {/* My custom team component with appropriate props */}
+          <TeamCreator 
+          side='home'
+          sideName='home__name'
+          name='Lions'
+          sideScore='home__score'
+          score={homeScore}
+          />
             {/* TODO STEP 3 - We need to change the hardcoded values in these divs to accept dynamic values from our state. */}
-            <div className="home__score">32</div>
-          </div>
-          <div className="timer">00:03</div>
-          <div className="away">
-            <h2 className="away__name">Tigers</h2>
-            <div className="away__score">32</div>
-          </div>
+        <div className="timer">{timer}</div>
+          {/* My custom team component with appropriate props */}
+          <TeamCreator 
+          side='away'
+          sideName="away__name"
+          name='Tigers'
+          sideScore='away__score'
+          score={awayScore}
+          />
         </div>
         <BottomRow />
       </section>
@@ -28,12 +50,14 @@ function App() {
         <div className="homeButtons">
 
           {/* TODO STEP 4 - Now we need to attach our state setter functions to click listeners. */}
-          <button className="homeButtons__touchdown">Home Touchdown</button>
-          <button className="homeButtons__fieldGoal">Home Field Goal</button>
+
+          {/* The handler function is passed into the onClick here */}
+          <button className="homeButtons__touchdown" onClick={ () => handlerFunc(setHomeScore, homeScore, 7)}>Home Touchdown</button>
+          <button className="homeButtons__fieldGoal" onClick={ () => handlerFunc(setHomeScore, homeScore, 3)}>Home Field Goal</button>
         </div>
         <div className="awayButtons">
-          <button className="awayButtons__touchdown">Away Touchdown</button>
-          <button className="awayButtons__fieldGoal">Away Field Goal</button>
+          <button className="awayButtons__touchdown" onClick={ () => handlerFunc(setAwayScore, awayScore, 7)}>Away Touchdown</button>
+          <button className="awayButtons__fieldGoal" onClick={ () => handlerFunc(setAwayScore, awayScore, 3)}>Away Field Goal</button>
         </div>
       </section>
     </div>
